@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>HYDROPOWER LAB</title>
+<style>
+:root{--bg:#06142b;--card:rgba(20,48,92,.45);--bd:rgba(80,200,255,.18);--tx:#e6f3ff;--mu:#8fb0d0;--ac:#22d3ee;--ac2:#2dd4bf;--ac3:#3b82f6;--er:#fb7185;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}html,body{margin:0}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{background:radial-gradient(1200px 600px at 80% -10%,#0c3a66 0,transparent 60%),var(--bg);color:var(--tx);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;display:flex;min-height:100vh}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:#06142b;z-index:10}
+aside{width:210px;padding:18px 12px;border-right:1px solid var(--bd);position:sticky;top:env(safe-area-inset-top,0px);height:100vh;flex:none}
+.logo{font-weight:800;letter-spacing:.08em;color:var(--ac);margin:0 8px 18px}.logo small{display:block;color:var(--mu);font-weight:400;letter-spacing:0;font-size:11px}
+nav a{display:block;padding:10px 12px;border-radius:10px;color:var(--mu);text-decoration:none;margin-bottom:4px;transition:.2s}
+nav a:hover,nav a.on{background:rgba(34,211,238,.12);color:var(--ac)}
+main{flex:1;min-width:0;padding:20px}
+section{display:none}section.on{display:block;animation:in .35s}@keyframes in{from{opacity:0;transform:translateY(8px)}}
+.g{display:grid;gap:14px;margin-bottom:14px}.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.c{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:16px;backdrop-filter:blur(8px);min-width:0}
+h1{margin:0 0 4px;font-size:24px}h2{margin:0 0 10px;font-size:16px;color:var(--ac)}.mu{color:var(--mu);font-size:13px}
+label{display:block;font-size:13px;color:var(--mu);margin-top:10px}
+input[type=number],input[type=text],select{width:100%;background:#0a1f3f;border:1px solid var(--bd);color:var(--tx);border-radius:8px;padding:8px;font:inherit}
+label select{display:inline;width:auto;padding:2px 4px}input[type=range]{width:100%;accent-color:var(--ac)}
+button{background:linear-gradient(135deg,var(--ac3),var(--ac));color:#04122a;border:0;border-radius:10px;padding:9px 14px;font-weight:700;cursor:pointer;transition:.2s;margin:8px 6px 0 0}
+button:hover{transform:translateY(-1px);filter:brightness(1.1)}button.s{background:transparent;color:var(--ac);border:1px solid var(--bd)}
+.k{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:10px}
+.k div{background:rgba(6,20,43,.6);border:1px solid var(--bd);border-radius:12px;padding:10px}.k b{display:block;font-size:18px;color:var(--ac2)}.k span{font-size:12px;color:var(--mu)}
+.err{color:var(--er);font-size:13px}.bar{height:8px;background:#0a1f3f;border-radius:6px;overflow:hidden;margin:6px 0}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--ac3),var(--ac2));width:0;transition:width .5s}
+.wrap{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:13px}td,th{padding:6px;border-bottom:1px solid var(--bd);text-align:left}
+.ch{height:250px;position:relative}svg{width:100%;height:auto}
+.fl{stroke-dasharray:8 8;animation:dash var(--fl,1s) linear infinite}.el{stroke-dasharray:6 6;animation:dash var(--el,1s) linear infinite}@keyframes dash{to{stroke-dashoffset:-16}}
+.sp{transform-box:fill-box;transform-origin:center;animation:spin var(--sp,1s) linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+.off *{animation-play-state:paused!important;opacity:.6}
+pre{white-space:pre-wrap;font-size:12.5px;color:#bde3ff;margin:0}.ok{color:var(--ac2)}
+.opt{display:block;width:100%;text-align:left;background:#0a1f3f;color:var(--tx);border:1px solid var(--bd);margin:6px 0}
+@media(max-width:800px){body{display:block}aside{width:auto;height:auto;display:flex;align-items:center;gap:8px;overflow-x:auto;padding:8px;border:0;border-bottom:1px solid var(--bd);z-index:5;background:#06142b}.logo{margin:0;white-space:nowrap}.logo small{display:none}nav{display:flex;gap:4px}nav a{white-space:nowrap;margin:0}main{padding:14px}}
+
+.hero{padding:10px 10px 8px;background:linear-gradient(180deg,rgba(14,60,110,.55),rgba(6,20,43,.6))}
+.hero svg{display:block;border-radius:14px}.hh{display:flex;justify-content:space-between;align-items:center;padding:2px 6px 8px}.hh h2{margin:0;font-size:18px}
+.fab{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:30;padding:14px 22px;border-radius:999px;font-size:15px;margin:0;box-shadow:0 8px 28px rgba(34,211,238,.4);animation:pulse 2.4s ease-in-out infinite}
+@keyframes pulse{50%{box-shadow:0 8px 40px rgba(34,211,238,.8);transform:scale(1.05)}}
+#dr.open~#fab{display:none}
+#dr{position:fixed;z-index:40;top:env(safe-area-inset-top,0px);right:0;bottom:0;width:min(380px,100%);background:#081a38;border-left:1px solid var(--bd);padding:16px 18px calc(20px + env(safe-area-inset-bottom,0px));overflow-y:auto;transform:translateX(105%);transition:transform .4s cubic-bezier(.2,.8,.2,1);box-shadow:-20px 0 50px rgba(0,0,0,.5)}
+#dr.open{transform:none}.dh{display:flex;justify-content:space-between;align-items:center}.dh h2{margin:0}.dh button{margin:0}
+.lv{margin:10px 0 2px;padding:10px;border-radius:12px;background:rgba(34,211,238,.1);border:1px solid var(--bd);color:#fde047;font-weight:700;text-align:center;font-size:17px}
+@media(max-width:800px){#dr{top:auto;left:0;width:auto;max-height:58vh;border-left:0;border-top:1px solid var(--bd);border-radius:22px 22px 0 0;transform:translateY(105%)}#dr.open{transform:none}}
+.k b{font-size:26px}.k div{padding:14px;border-top:3px solid var(--ac3)}.k div:nth-child(even){border-top-color:var(--ac2)}
+.bar{height:20px;border-radius:10px}.bar i{border-radius:10px;background:repeating-linear-gradient(45deg,rgba(255,255,255,.2) 0 10px,transparent 10px 20px),linear-gradient(90deg,var(--ac3),var(--ac2));background-size:28px 28px,100% 100%;animation:stp .8s linear infinite}@keyframes stp{to{background-position:28px 0,0 0}}
+.ch{height:300px}
+.fl{stroke-dasharray:14 12;animation:dashf var(--fl,1s) linear infinite}.el{stroke-dasharray:10 10;animation:dashe var(--el,1s) linear infinite}
+@keyframes dashf{to{stroke-dashoffset:-26}}@keyframes dashe{to{stroke-dashoffset:-20}}
+.wv{animation:wave 2s linear infinite}@keyframes wave{to{transform:translateX(-100px)}}
+.gl{transform-box:fill-box;transform-origin:center;animation:glow 1.4s ease-in-out infinite}@keyframes glow{50%{transform:scale(1.25);opacity:.5}}
+.lit{opacity:var(--lit,.7)}
+#toast{position:fixed;left:50%;top:calc(14px + env(safe-area-inset-top,0px));transform:translate(-50%,-150%);z-index:60;background:#0a1f3f;border:1px solid var(--ac);border-radius:12px;padding:10px 16px;max-width:92vw;transition:transform .4s}
+#toast.on{transform:translate(-50%,0)}#toast.er{border-color:var(--er);color:var(--er)}#toast.ok{border-color:var(--ac2);color:var(--ac2)}
+</style></head><body>
+<aside><div class="logo">HYDROPOWER LAB<small>Simulador de microgeneración</small></div>
+<nav><a href="#panel">⚡ Dashboard</a><a href="#escenarios">📊 Escenarios</a><a href="#academy">🎓 Academy</a><a href="#historial">🗂 Historial</a><a href="#proyecto">📐 Proyecto</a></nav></aside>
+<main>
+<section id="panel"><h1>Dashboard</h1><p class="mu">Simulador inteligente de microgeneración hidroeléctrica · María José Carreño Girnu · Ingeniería en Energías, Universidad de La Guajira</p>
+<div class="c hero"><div class="hh"><h2>Microcentral en operación</h2></div><svg id="dg" class="off" viewBox="0 0 800 440">
+<defs><linearGradient id="wg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#38e1ff"/><stop offset="1" stop-color="#1d4ed8"/></linearGradient>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2dd4bf"/><stop offset="1" stop-color="#0ea5e9"/></linearGradient>
+<clipPath id="cr"><rect x="10" y="92" width="190" height="310"/></clipPath><clipPath id="ct"><rect x="300" y="398" width="500" height="42"/></clipPath></defs>
+<rect width="800" height="440" fill="#07203f"/><path d="M0 70L120 30 200 70V410H0Z" fill="#0d2a4d"/><rect y="404" width="800" height="36" fill="#0b2447"/>
+<g clip-path="url(#cr)"><rect x="10" y="100" width="190" height="300" fill="url(#wg)" opacity=".9"/><g class="wv" fill="none" stroke="#bff3ff" stroke-width="4"><path d="M-90 100q25-14 50 0t50 0 50 0 50 0 50 0 50 0 50 0 50 0 50 0 50 0"/><path transform="translate(0 22)" opacity=".5" d="M-90 100q25-14 50 0t50 0 50 0 50 0 50 0 50 0 50 0 50 0 50 0 50 0"/></g></g>
+<rect x="200" y="82" width="26" height="326" fill="#3b4f6b"/>
+<g clip-path="url(#ct)"><rect x="300" y="408" width="500" height="40" fill="url(#wg)" opacity=".85"/><g class="wv" fill="none" stroke="#bff3ff" stroke-width="3"><path d="M200 408q25-12 50 0t50 0 50 0 50 0 50 0 50 0 50 0 50 0 50 0 50 0 50 0 50 0"/></g></g>
+<line x1="245" y1="92" x2="245" y2="345" stroke="#8fb0d0" stroke-dasharray="5 5"/><path d="M237 92H253M237 345H253" stroke="#8fb0d0" stroke-width="2"/><text id="dh" x="253" y="150" fill="#bff3ff" font-size="18" font-weight="700"></text>
+<text x="105" y="60" text-anchor="middle" fill="#8fb0d0" font-size="17">Embalse</text><text id="dq" x="105" y="262" text-anchor="middle" fill="#bff3ff" font-size="20" font-weight="700"></text>
+<path d="M226 215C290 215 330 336 380 340" stroke="#16365e" stroke-width="34" fill="none"/><path d="M226 215C290 215 330 336 380 340" stroke="#24527f" stroke-width="26" fill="none"/>
+<path d="M226 215C290 215 330 336 380 340" stroke="#22d3ee" stroke-width="7" fill="none" class="fl"/><g id="pw"></g>
+<text x="300" y="262" fill="#8fb0d0" font-size="15" transform="rotate(30 300 262)">Tubería forzada</text>
+<circle cx="440" cy="345" r="70" fill="#0a1f3f" stroke="#22d3ee" stroke-width="3"/><g transform="translate(440,345)"><g class="sp"><g id="bl"></g><circle r="11" fill="#e6f3ff"/></g></g>
+<text x="440" y="262" text-anchor="middle" fill="#8fb0d0" font-size="15">Turbina</text>
+<path d="M510 345H550" stroke="#e6f3ff" stroke-width="8" class="fl" style="stroke-dasharray:8 6"/>
+<rect x="550" y="300" width="110" height="90" rx="14" fill="#0a1f3f" stroke="#3b82f6" stroke-width="3"/><circle cx="605" cy="345" r="40" fill="none" stroke="#fde047" stroke-width="3" class="gl lit"/>
+<g transform="translate(605,345)"><g class="sp" stroke="#fde047" stroke-width="5" stroke-linecap="round"><path d="M0-26V26M-26 0H26M-18-18L18 18M-18 18L18-18"/></g><circle r="9" fill="#0a1f3f" stroke="#fde047" stroke-width="3"/></g>
+<text x="605" y="290" text-anchor="middle" fill="#8fb0d0" font-size="15">Generador</text>
+<path d="M660 345H700V215" stroke="#fde047" stroke-width="14" opacity=".2" fill="none"/><path d="M660 345H700V215" stroke="#fde047" stroke-width="5" fill="none" class="el"/><g id="pe"></g>
+<rect x="660" y="150" width="80" height="66" rx="6" fill="#0d2a4d" stroke="#3b82f6" stroke-width="2"/><path d="M652 152L700 112 748 152Z" fill="#16365e"/>
+<circle cx="700" cy="182" r="38" fill="#fde047" class="gl lit" fill-opacity=".35"/><circle cx="700" cy="182" r="13" fill="#fde047" class="lit"/>
+<text x="708" y="264" fill="#8fb0d0" font-size="13">Salida eléctrica</text><text id="dp" x="708" y="288" fill="#fde047" font-size="22" font-weight="700"></text></svg></div>
+<div class="c g"><h2>Resultados</h2><div class="k">
+<div><span>Potencia hidráulica (W)</span><b id="k1">—</b></div><div><span>Potencia hidráulica (kW)</span><b id="k2">—</b></div>
+<div><span>Potencia eléctrica (W)</span><b id="k3">—</b></div><div><span>Potencia eléctrica (kW)</span><b id="k4">—</b></div>
+<div><span>Energía generada</span><b id="k5">—</b></div><div><span>Eficiencia</span><b id="k6">—</b></div></div>
+<h2 style="margin-top:16px">Cobertura de la demanda</h2><div class="bar"><i id="bar"></i></div><b id="cv">—</b>
+<p class="mu">Ph = ρ·g·Q·H · Pe = Ph·η · E = Pe·t (ρ = 1000 kg/m³, g = 9,81 m/s²). H es altura neta: no se descuentan pérdidas otra vez.</p></div>
+<div class="g g2"><div class="c"><h2>Potencia vs caudal</h2><div class="ch"><canvas id="cq"></canvas></div></div>
+<div class="c"><h2>Potencia vs altura neta</h2><div class="ch"><canvas id="ch"></canvas></div></div></div></section>
+
+<section id="escenarios"><h1>Comparador de escenarios</h1><p class="mu">Edita caudal, altura y eficiencia. Se usan el tiempo y la demanda del Dashboard.</p>
+<div class="c g"><div class="wrap"><table><thead><tr><th>Escenario</th><th>Q (L/s)</th><th>H (m)</th><th>η (%)</th></tr></thead><tbody id="sci"></tbody></table></div>
+<div class="wrap"><table><thead><tr><th>Escenario</th><th>Pe (kW)</th><th>E (kWh)</th><th>Cobertura</th></tr></thead><tbody id="sct"></tbody></table></div>
+<div class="ch"><canvas id="sc"></canvas></div></div></section>
+
+<section id="academy"><h1>ACADEMY</h1>
+<div class="g g2"><div class="c"><h2>Variables</h2><p><b>Caudal (Q):</b> volumen de agua por segundo; 1 L/s = 0,001 m³/s.<br><b>Altura neta (H):</b> desnivel útil tras descontar pérdidas de carga.<br><b>Eficiencia (η):</b> fracción de potencia hidráulica que se vuelve eléctrica (turbina, generador, transmisión).<br><b>Tiempo (t):</b> horas de operación; multiplica la potencia para dar energía.<br><b>Demanda:</b> potencia que se desea abastecer.</p></div>
+<div class="c"><h2>Conceptos</h2><p><b>Potencia hidráulica</b> es la que lleva el agua: ρ·g·Q·H. <b>Potencia eléctrica</b> es lo que entrega el generador: Ph·η, siempre menor. <b>Pérdidas de carga:</b> la fricción en tubería y accesorios reduce la altura bruta; la altura neta ya las incluye. <b>Eficiencia:</b> con η = 70 %, de cada 100 W hidráulicos se obtienen 70 W eléctricos.</p></div></div>
+<div class="c"><h2>Reto</h2><p>«Si el caudal aumenta al doble y las demás variables permanecen constantes, ¿qué sucede con la potencia eléctrica?»</p><div id="qz"></div><p id="fb"></p></div></section>
+
+<section id="historial"><h1>Historial</h1><p class="mu">Se guarda en este navegador. Marca dos simulaciones para compararlas.</p>
+<div class="c"><div class="wrap"><table><thead><tr><th></th><th>ID</th><th>Fecha</th><th>Pe (kW)</th><th>E (kWh)</th><th>Informe</th></tr></thead><tbody id="hb"></tbody></table></div>
+<button id="cmp">Comparar seleccionadas</button><button id="clr" class="s">Borrar historial</button><div id="cr"></div></div></section>
+
+<section id="proyecto"><h1>Proyecto y guía académica</h1>
+<div class="g g2"><div class="c"><h2>Problema y modelo</h2><p>Estimar la potencia y la energía de una microcentral a partir del caudal, la altura neta y la eficiencia, y compararlas con una demanda. Sistema: embalse → tubería forzada → turbina → generador → carga.</p>
+<div class="wrap"><table><tr><th>Variable</th><th>Unidad</th><th>Tipo</th></tr><tr><td>Q caudal</td><td>L/s o m³/s</td><td>entrada</td></tr><tr><td>H altura neta</td><td>m</td><td>entrada</td></tr><tr><td>η eficiencia</td><td>%</td><td>entrada</td></tr><tr><td>t tiempo</td><td>h</td><td>entrada</td></tr><tr><td>D demanda</td><td>kW</td><td>entrada</td></tr><tr><td>Ph, Pe</td><td>W, kW</td><td>salida</td></tr><tr><td>E energía</td><td>kWh</td><td>salida</td></tr><tr><td>ρ, g</td><td>kg/m³, m/s²</td><td>constante</td></tr></table></div></div>
+<div class="c"><h2>Pseudocódigo</h2><pre>INICIO
+ LEER Q, unidad, H, eta%, t, D
+ SI dato vacío/no numérico/no finito → ERROR
+ SI Q≤0 o H≤0 o eta≤0 o eta&gt;100 o t≤0 o D&lt;0 → ERROR
+ SI unidad = L/s ENTONCES Q ← Q/1000
+ Ph ← 1000×9,81×Q×H
+ Pe ← Ph×(eta/100)
+ E ← (Pe/1000)×t
+ SI D = 0 → «sin demanda»
+ SINO cob ← Pe/1000/D×100
+   SI cob≥100 «cubre»; SINO SI cob≥50 «parcial»; SINO «insuficiente»
+ PARA i ← 0 HASTA 20: P(Q·f), P(H·f), f = 0,2+0,09·i
+ MOSTRAR resultados
+FIN</pre></div></div>
+<div class="c g"><h2>Pruebas de escritorio (ejecutadas con el mismo código)</h2><div class="wrap"><table><thead><tr><th>Caso</th><th>Entradas</th><th>Esperado</th><th>Obtenido</th><th></th></tr></thead><tbody id="ts"></tbody></table></div>
+<p class="mu">Fuentes: ecuación de potencia hidráulica P = ρ·g·Q·H·η (texto estándar de hidráulica y centrales hidroeléctricas). Guía de Algoritmos y Programación, Universidad de La Guajira. Bibliotecas: Chart.js, jsPDF.</p></div></section>
+</main>
+<div id="dr" role="dialog" aria-label="Parámetros de entrada"><div class="dh"><h2>Parámetros de entrada</h2><button id="cl" class="s">✕ Cerrar</button></div><div class="lv" id="lv">—</div><div id="flds"></div>
+<label>Estudiante</label><input type="text" id="nm" value="María José Carreño Girnu"><div id="err" class="err"></div>
+<button id="sv">Guardar simulación</button><button id="gr" class="s">GENERAR INFORME</button><p class="mu">El informe se descarga y se envía por correo a <b id="em"></b>.</p></div>
+<button id="fab" class="fab">⚙ Parámetros</button><div id="toast"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+const $=s=>document.querySelector(s),RHO=1000,G=9.81,fx=(n,k=2)=>Number(n).toLocaleString('es-CO',{maximumFractionDigits:k}),fmt=d=>new Date(d).toLocaleString('es-CO');
+const FD=[['q','Caudal','L/s',1,500,1,50],['h','Altura neta','m',1,200,.5,20],['e','Eficiencia global','%',1,100,1,70],['t','Tiempo de operación','h',1,24,.5,8],['d','Demanda de referencia','kW',0,100,.5,5]];
+const MSG=c=>c===null?'Sin demanda de referencia':c>=100?'Cubre la demanda':c>=50?'Cobertura parcial':'Cobertura insuficiente';
+const pk=(Q,H)=>RHO*G*Q*H/1000, TD={t:8,D:5}, col={c:'#22d3ee',b:'#3b82f6',g:'#2dd4bf'};
+/* ===== CONFIGURACIÓN: pega aquí la URL de tu Apps Script (ver Code.gs) ===== */
+const CFG={URL:'https://script.google.com/macros/s/AKfycbwaqftR5Kq11YxT5ESMWnjoDUzu5MvNdbNEwyRMVaRd1SSBm_JvGB8pXQB56XYxVrgXYw/exec',TO:'ladiazcastillo@uniguajira.edu.co',TOKEN:''};
+const clp=(a,x,b)=>Math.max(a,Math.min(b,x));
+function toast(m,k){const t=$('#toast');t.textContent=m;t.className='on '+(k||'');clearTimeout(toast.t);toast.t=setTimeout(()=>t.className='',6000)}
+async function cloud(p){if(!CFG.URL){toast('Falta pegar la URL de Google Apps Script en CFG.URL (ver Code.gs).','er');return false}
+ try{await fetch(CFG.URL,{method:'POST',mode:'no-cors',body:JSON.stringify(Object.assign({token:CFG.TOKEN},p))});return true}catch(e){toast('No se pudo conectar con Google: '+e.message,'er');return false}}
+const row=h=>({id:h.id,fecha:h.date,estudiante:h.nm,Q_Ls:h.v.Q*1000,H_m:h.v.H,eta_pct:h.v.eta*100,t_h:h.v.t,D_kW:h.v.D,Ph_W:h.Ph,Pe_W:h.Pe,E_kWh:h.E,cobertura_pct:h.cov});
+let cur=null,U='L',HIS=[];
+try{HIS=JSON.parse(localStorage.getItem('hpl_hist')||'[]')}catch(e){}
+const sv=()=>{try{localStorage.setItem('hpl_hist',JSON.stringify(HIS))}catch(e){}};
+
+/* ---- Modelo: validación y cálculo ---- */
+function validate(r,u){const E=[],n={};
+ for(const f of FD){const s=String(r[f[0]]??'').trim();n[f[0]]=s===''?NaN:Number(s);if(!Number.isFinite(n[f[0]]))E.push(f[1]+': ingresa un número válido (no vacío, sin texto)')}
+ if(E.length)return{E};
+ if(n.q<=0)E.push('Caudal: debe ser mayor que 0');
+ if(n.h<=0)E.push('Altura neta: debe ser mayor que 0');
+ if(n.e<=0||n.e>100)E.push('Eficiencia: debe ser mayor que 0 y no superar 100 %');
+ if(n.t<=0)E.push('Tiempo: debe ser mayor que 0');
+ if(n.d<0)E.push('Demanda: debe ser 0 o mayor');
+ if(E.length)return{E};
+ return{E,v:{Q:u==='L'?n.q/1000:n.q,H:n.h,eta:n.e/100,t:n.t,D:n.d}}}
+function calc(v){const Ph=RHO*G*v.Q*v.H,Pe=Ph*v.eta,E=Pe/1000*v.t;return{v,Ph,Pe,E,cov:v.D>0?Pe/1000/v.D*100:null}}
+function curves(v){const a={xq:[],q1:[],q2:[],xh:[],h1:[],h2:[]};
+ for(let i=0;i<=20;i++){const f=.2+i*.09;a.xq.push((v.Q*f*1000).toFixed(1));a.q1.push(pk(v.Q*f,v.H));a.q2.push(pk(v.Q*f,v.H)*v.eta);a.xh.push((v.H*f).toFixed(1));a.h1.push(pk(v.Q,v.H*f));a.h2.push(pk(v.Q,v.H*f)*v.eta)}return a}
+
+/* ---- Gráficas ---- */
+function cfg(type,labels,ds,xl,yl,light,y1){const tc=light?'#222':'#8fb0d0',gc=light?'#ddd':'rgba(120,180,255,.12)',ax=t=>({title:{display:!!t,text:t,color:tc},ticks:{color:tc},grid:{color:gc}});
+ const sc={x:ax(xl),y:ax(yl)};if(y1){sc.y1=ax(y1);sc.y1.position='right';sc.y1.grid={drawOnChartArea:false}}
+ return{type,data:{labels,datasets:ds},options:{responsive:!light,maintainAspectRatio:false,animation:light?false:{duration:900},plugins:{legend:{labels:{color:tc}}},scales:sc}}}
+const mk=(a,b)=>[{label:'Hidráulica (kW)',data:a,borderColor:col.b,backgroundColor:col.b,pointRadius:0,tension:.3},{label:'Eléctrica (kW)',data:b,borderColor:col.c,backgroundColor:col.c,pointRadius:0,tension:.3}];
+let cQ,cH,scC;
+function setCh(ch,x,a,b){if(!ch)return;ch.data.labels=x;ch.data.datasets[0].data=a;ch.data.datasets[1].data=b;ch.update()}
+
+/* ---- Render del Dashboard ---- */
+function render(c){
+ const o=c?[fx(c.Ph,1)+' W',fx(c.Ph/1000,3)+' kW',fx(c.Pe,1)+' W',fx(c.Pe/1000,3)+' kW',fx(c.E,3)+' kWh',fx(c.v.eta*100,1)+' %']:Array(6).fill('—');
+ o.forEach((x,i)=>$('#k'+(i+1)).textContent=x);
+ $('#cv').textContent=c?(c.cov===null?'':fx(c.cov,1)+' % · ')+MSG(c.cov):'—';
+ $('#bar').style.width=c&&c.cov!==null?Math.min(c.cov,100)+'%':'0';
+ const s=$('#dg');s.classList.toggle('off',!c);
+ if(c){const L=c.v.Q*1000,P=c.Pe/1000,st=(k,v)=>s.style.setProperty(k,v),sd=(q,v)=>s.querySelectorAll(q).forEach(a=>{if(a.getAttribute('dur')!=v)a.setAttribute('dur',v)});
+  st('--fl',clp(.25,25/L,2.5)+'s');st('--sp',clp(.45,60/L,4)+'s');st('--el',clp(.3,3/(P+.1),2.5)+'s');st('--lit',c.cov===null?.7:Math.min(1,.2+c.cov/100*.8));
+  sd('.aw',clp(.6,60/L,4)+'s');sd('.ae',clp(.6,8/(P+.5),4)+'s');s.unpauseAnimations();
+  $('#dp').textContent=fx(P,2)+' kW';$('#dq').textContent='Q = '+fx(L,1)+' L/s';$('#dh').textContent='H = '+fx(c.v.H,1)+' m';
+  $('#lv').textContent=fx(P,2)+' kW · '+fx(c.E,2)+' kWh'+(c.cov===null?'':' · '+fx(c.cov,0)+' %');TD.t=c.v.t;TD.D=c.v.D}
+ else{['#dp','#dq','#dh'].forEach(q=>$(q).textContent='');$('#lv').textContent='Corrige los datos';s.pauseAnimations()}
+ const a=c?curves(c.v):{xq:[],q1:[],q2:[],xh:[],h1:[],h2:[]};setCh(cQ,a.xq,a.q1,a.q2);setCh(cH,a.xh,a.h1,a.h2)}
+function run(){const r={};FD.forEach(f=>r[f[0]]=$('#'+f[0]).value);const x=validate(r,U);
+ $('#err').innerHTML=x.E.map(m=>'<div>⚠ '+m+'</div>').join('');
+ cur=x.E.length?null:calc(x.v);render(cur)}
+
+/* ---- Escenarios ---- */
+const SC=[['Conservador',20,15,60],['Intermedio',40,25,70],['Optimista',60,35,80]];
+function renderSc(){
+ const R=SC.map(([n,q,h,e])=>{const ok=[q,h,e].every(Number.isFinite)&&q>0&&h>0&&e>0&&e<=100;if(!ok)return{n,ok};const Pe=pk(q/1000,h)*e/100;return{n,ok,Pe,E:Pe*TD.t,cov:TD.D>0?Pe/TD.D*100:null}});
+ $('#sct').innerHTML=R.map(r=>'<tr><td>'+r.n+'</td>'+(r.ok?'<td>'+fx(r.Pe,3)+'</td><td>'+fx(r.E,2)+'</td><td>'+(r.cov===null?'—':fx(r.cov,1)+' %')+'</td>':'<td colspan="3" class="err">Valores inválidos</td>')+'</tr>').join('');
+ if(scC){scC.data.datasets[0].data=R.map(r=>r.ok?r.Pe:null);scC.data.datasets[1].data=R.map(r=>r.ok?r.E:null);scC.update()}}
+
+/* ---- Informe PDF ---- */
+function chartImg(x,a,b,xl){const cv=document.createElement('canvas');cv.width=900;cv.height=380;const ch=new Chart(cv,cfg('line',x,mk(a,b),xl,'Potencia (kW)',true));const u=cv.toDataURL('image/png');ch.destroy();return u}
+function report(c,nm,date,id){
+ if(!window.jspdf||!window.Chart){alert('No se pudieron cargar jsPDF/Chart.js (sin conexión). El informe requiere esas bibliotecas.');return}
+ const d=new window.jspdf.jsPDF(),v=c.v;let y=20;
+ d.setFillColor(6,20,43);d.rect(0,0,210,297,'F');d.setTextColor(34,211,238);d.setFontSize(32);d.text('HYDROPOWER LAB',20,110);
+ d.setTextColor(230,243,255);d.setFontSize(14);d.text('Simulador inteligente de microgeneración hidroeléctrica',20,122);d.text('Informe técnico de simulación',20,131);
+ d.setFontSize(11);d.text('Estudiante: '+nm,20,155);d.text('Programa: Ingeniería en Energías - Universidad de La Guajira',20,163);d.text('Fecha de simulación: '+fmt(date),20,171);d.text('ID: '+id,20,179);
+ d.addPage();d.setTextColor(20,30,50);
+ const brk=n=>{if(y>297-n){d.addPage();y=20}};
+ const hd=t=>{brk(20);d.setFontSize(13);d.setTextColor(10,90,140);d.text(t,15,y);y+=7;d.setTextColor(20,30,50);d.setFontSize(10)};
+ const P=t=>d.splitTextToSize(t,180).forEach(l=>{brk(8);d.text(l,15,y);y+=5});
+ const T=rows=>{rows.forEach(r=>{brk(9);d.text(r[0],15,y);d.text(r[1],85,y);d.text(r[2]||'',150,y);d.line(15,y+1.8,195,y+1.8);y+=6.5});y+=4};
+ const L=v.Q*1000;
+ hd('1. Parámetros de entrada');T([['Caudal Q',fx(L,3)+' L/s','= '+fx(v.Q,5)+' m3/s'],['Altura neta H',fx(v.H,2)+' m'],['Eficiencia global',fx(v.eta*100,2)+' %','= '+fx(v.eta,4)],['Tiempo de operación t',fx(v.t,2)+' h'],['Demanda de referencia',fx(v.D,3)+' kW']]);
+ hd('2. Constantes utilizadas');T([['Densidad del agua (rho)','1000 kg/m3'],['Gravedad (g)','9,81 m/s2']]);
+ hd('3. Modelo matemático');P('Potencia hidráulica: Ph = rho x g x Q x H.  Potencia eléctrica: Pe = rho x g x Q x H x eta.  Energía: E = Pe x t. La altura H es neta (pérdidas hidráulicas ya descontadas).');
+ hd('4. Desarrollo de los cálculos');P('Q = '+fx(L,3)+' L/s / 1000 = '+fx(v.Q,5)+' m3/s');P('Ph = 1000 x 9,81 x '+fx(v.Q,5)+' x '+fx(v.H,2)+' = '+fx(c.Ph,2)+' W = '+fx(c.Ph/1000,4)+' kW');P('Pe = '+fx(c.Ph,2)+' W x '+fx(v.eta,4)+' = '+fx(c.Pe,2)+' W = '+fx(c.Pe/1000,4)+' kW');P('E = '+fx(c.Pe/1000,4)+' kW x '+fx(v.t,2)+' h = '+fx(c.E,4)+' kWh');y+=3;
+ hd('5. Resultados obtenidos');T([['Potencia hidráulica',fx(c.Ph,2)+' W',fx(c.Ph/1000,4)+' kW'],['Potencia eléctrica',fx(c.Pe,2)+' W',fx(c.Pe/1000,4)+' kW'],['Energía generada',fx(c.E,4)+' kWh']]);
+ const a=curves(v);hd('6. Gráficas de la simulación');brk(70);d.addImage(chartImg(a.xq,a.q1,a.q2,'Caudal (L/s)'),'PNG',15,y,180,76);y+=80;brk(80);d.addImage(chartImg(a.xh,a.h1,a.h2,'Altura neta (m)'),'PNG',15,y,180,76);y+=84;
+ hd('7. Comparación con la demanda');P(c.cov===null?'No se definió demanda de referencia (D = 0 kW).':'Demanda: '+fx(v.D,3)+' kW. Potencia eléctrica: '+fx(c.Pe/1000,4)+' kW. Cobertura = '+fx(c.cov,2)+' %. Resultado: '+MSG(c.cov)+'.');y+=2;
+ hd('8. Interpretación técnica');P('Con '+fx(L,2)+' L/s y '+fx(v.H,2)+' m de altura neta, el agua aporta '+fx(c.Ph/1000,3)+' kW hidráulicos y, con una eficiencia de '+fx(v.eta*100,1)+' %, la microcentral entrega '+fx(c.Pe/1000,3)+' kW eléctricos, es decir '+fx(c.E,2)+' kWh en '+fx(v.t,1)+' h. La potencia crece de forma lineal con Q, con H y con eta.');y+=2;
+ hd('9. Supuestos y limitaciones');P('Densidad constante (1000 kg/m3) y gravedad 9,81 m/s2. Caudal y altura neta constantes durante todo el tiempo de operación. Eficiencia global constante, sin curvas de turbina ni variación con la carga. No se calculan pérdidas de carga: se asume que H ya es neta. Modelo educativo, no sustituye un diseño de ingeniería.');
+ const fn='HYDROPOWER-LAB_'+id+'.pdf';d.save(fn);
+ const b64=d.output('datauristring').split(',')[1],h={id,date,nm,Ph:c.Ph,Pe:c.Pe,E:c.E,cov:c.cov,v};
+ toast('Enviando informe a '+CFG.TO+'…');
+ cloud({action:'informe',fileName:fn,pdf:b64,row:row(h)}).then(ok=>ok&&toast('Informe enviado a '+CFG.TO+'. Si no llega en 1–2 min, revisa spam y la URL del script.','ok'))}
+
+/* ---- Historial ---- */
+function renderHis(){$('#hb').innerHTML=HIS.length?HIS.map((h,i)=>'<tr><td><input type="checkbox" data-i="'+i+'"></td><td>'+h.id+'</td><td>'+fmt(h.date)+'</td><td>'+fx(h.Pe/1000,3)+'</td><td>'+fx(h.E,3)+'</td><td><button class="s" data-r="'+i+'">PDF</button></td></tr>').join(''):'<tr><td colspan="6" class="mu">Aún no hay simulaciones guardadas.</td></tr>'}
+
+/* ---- Inicio ---- */
+function init(){
+ $('#em').textContent=CFG.TO;$('#fab').onclick=()=>$('#dr').classList.add('open');$('#cl').onclick=()=>$('#dr').classList.remove('open');
+ addEventListener('keydown',e=>{if(e.key=='Escape')$('#dr').classList.remove('open')});
+ $('#bl').innerHTML=[0,1,2,3,4,5,6,7].map(i=>'<path d="M0 0C18-10 34-26 30-50C14-38 4-20 0 0Z" transform="rotate('+i*45+')" fill="url(#bg)" stroke="#a7f3d0" stroke-width="1.5"/>').join('');
+ const PW='M226 215C290 215 330 336 380 340',PE='M660 345H700V215';
+ $('#pw').innerHTML=[0,1,2,3,4,5,6,7].map(i=>'<circle r="6" fill="#e0f9ff"><animateMotion class="aw" dur="1.2s" begin="-'+i*.15+'s" repeatCount="indefinite" path="'+PW+'"/></circle>').join('');
+ $('#pe').innerHTML=[0,1,2,3,4,5].map(i=>'<circle r="6" fill="#fff7b0"><animateMotion class="ae" dur="1s" begin="-'+i*.17+'s" repeatCount="indefinite" path="'+PE+'"/></circle>').join('');
+ $('#flds').innerHTML=FD.map(f=>'<label>'+f[1]+' ('+(f[0]=='q'?'<select id="u"><option value="L">L/s</option><option value="M">m³/s</option></select>':f[2])+')</label><input type="number" id="'+f[0]+'" value="'+f[6]+'" step="any"><input type="range" id="'+f[0]+'s" min="'+f[3]+'" max="'+f[4]+'" step="'+f[5]+'" value="'+f[6]+'">').join('');
+ FD.forEach(f=>{const n=$('#'+f[0]),s=$('#'+f[0]+'s');n.oninput=()=>{s.value=n.value;run()};s.oninput=()=>{n.value=s.value;run()}});
+ $('#u').onchange=e=>{const nu=e.target.value,x=Number($('#q').value),s=$('#qs');if(nu!==U&&Number.isFinite(x)&&$('#q').value.trim()!=='')$('#q').value=+(x*(nu=='M'?.001:1000)).toPrecision(6);
+  U=nu;Object.assign(s,nu=='M'?{min:.001,max:.5,step:.001}:{min:1,max:500,step:1});s.value=$('#q').value;run()};
+ if(window.Chart){cQ=new Chart($('#cq'),cfg('line',[],mk([],[]),'Caudal (L/s)','Potencia (kW)'));cH=new Chart($('#ch'),cfg('line',[],mk([],[]),'Altura neta (m)','Potencia (kW)'));
+ scC=new Chart($('#sc'),cfg('bar',SC.map(s=>s[0]),[{label:'Potencia (kW)',data:[],backgroundColor:col.c,yAxisID:'y'},{label:'Energía (kWh)',data:[],backgroundColor:col.b,yAxisID:'y1'}],'Escenario','kW',false,'kWh'))}else $('#err').textContent='Chart.js no cargó (sin conexión): las gráficas y el informe no están disponibles, pero los cálculos funcionan.';
+ $('#sci').innerHTML=SC.map((s,i)=>'<tr><td>'+s[0]+'</td>'+[1,2,3].map(j=>'<td><input type="number" step="any" data-i="'+i+'" data-j="'+j+'" value="'+s[j]+'"></td>').join('')+'</tr>').join('');
+ $('#sci').oninput=e=>{const t=e.target;SC[t.dataset.i][t.dataset.j]=t.value.trim()===''?NaN:Number(t.value);renderSc()};
+ /* Academy */
+ const op=['Se mantiene igual','Se duplica','Se cuadruplica','Se reduce a la mitad'];
+ $('#qz').innerHTML=op.map((t,i)=>'<button class="opt" data-o="'+i+'">'+t+'</button>').join('');
+ $('#qz').onclick=e=>{const i=e.target.dataset.o;if(i===undefined)return;const f=$('#fb');
+  const ex=cur?' Con tus datos: de '+fx(cur.Pe/1000,3)+' kW pasaría a '+fx(2*cur.Pe/1000,3)+' kW.':'';
+  f.className=i==1?'ok':'err';f.textContent=i==1?'✔ Correcto. Pe = ρ·g·Q·H·η es directamente proporcional a Q (exponente 1): si Q se multiplica por 2, Pe se multiplica por 2.'+ex:'✘ Incorrecto. Q aparece elevado a la 1 en Pe = ρ·g·Q·H·η, así que la relación es lineal: al duplicar Q la potencia se duplica, no se '+(i==2?'cuadruplica':i==3?'reduce':'mantiene')+'. Probalo moviendo el deslizador de caudal en el Dashboard.'.replace('Probalo','Pruébalo')};
+ /* Guardar / informe */
+ $('#sv').onclick=()=>{if(!cur){$('#err').innerHTML+='<div>⚠ Corrige los datos antes de guardar.</div>';return}
+  HIS.unshift({id:'HPL-'+Date.now().toString(36).toUpperCase(),date:new Date().toISOString(),nm:$('#nm').value,Ph:cur.Ph,Pe:cur.Pe,E:cur.E,cov:cur.cov,v:cur.v});sv();if(CFG.URL)cloud({action:'guardar',row:row(HIS[0])});renderHis();location.hash='historial'};
+ $('#gr').onclick=()=>{if(!cur){$('#err').innerHTML+='<div>⚠ No hay resultados válidos para el informe.</div>';return}report(cur,$('#nm').value,new Date().toISOString(),'ACTUAL')};
+ $('#hb').onclick=e=>{const i=e.target.dataset.r;if(i===undefined)return;const h=HIS[i];report(calc(h.v),h.nm,h.date,h.id)};
+ $('#clr').onclick=()=>{HIS=[];sv();renderHis();$('#cr').innerHTML=''};
+ $('#cmp').onclick=()=>{const s=[...document.querySelectorAll('#hb input:checked')].map(x=>HIS[x.dataset.i]);
+  if(s.length!==2){$('#cr').innerHTML='<p class="err">Selecciona exactamente dos simulaciones.</p>';return}
+  const [a,b]=s,dl=(x,y)=>y===0?'—':fx((x-y)/y*100,1)+' %';
+  $('#cr').innerHTML='<table><tr><th></th><th>'+a.id+'</th><th>'+b.id+'</th><th>Δ</th></tr><tr><td>Pe (kW)</td><td>'+fx(a.Pe/1000,3)+'</td><td>'+fx(b.Pe/1000,3)+'</td><td>'+dl(a.Pe,b.Pe)+'</td></tr><tr><td>E (kWh)</td><td>'+fx(a.E,3)+'</td><td>'+fx(b.E,3)+'</td><td>'+dl(a.E,b.E)+'</td></tr></table>'};
+ /* Pruebas de escritorio */
+ const TS=[['1. Normal',{q:50,h:20,e:70,t:8,d:5},{Ph:9810,Pe:6867,E:54.936,cov:137.34}],['2. Otra rama (insuficiente)',{q:20,h:15,e:60,t:6,d:5},{Ph:2943,Pe:1765.8,E:10.5948,cov:35.316}],['3. Límite (η = 100 %, D = 0)',{q:1,h:1,e:100,t:1,d:0},{Ph:9.81,Pe:9.81,E:.00981,cov:null}],['4. Inválido (caudal vacío)',{q:'',h:20,e:70,t:8,d:5},null]];
+ $('#ts').innerHTML=TS.map(([n,r,x])=>{const z=validate(r,'L'),ent='Q='+(r.q===''?'(vacío)':r.q)+' L/s, H='+r.h+' m, η='+r.e+' %, t='+r.t+' h, D='+r.d+' kW';let ex,ob,ok;
+  if(!x){ex='Error de validación';ob=z.E.length?z.E[0]:'sin error';ok=z.E.length>0}
+  else{const c=calc(z.v),cl=(a,b)=>Math.abs(a-b)<=1e-6*Math.max(1,Math.abs(b));ex='Ph='+fx(x.Ph,3)+' W; Pe='+fx(x.Pe,3)+' W; E='+fx(x.E,5)+' kWh; cob='+(x.cov===null?'sin demanda':fx(x.cov,3)+' %');
+   ob='Ph='+fx(c.Ph,3)+' W; Pe='+fx(c.Pe,3)+' W; E='+fx(c.E,5)+' kWh; cob='+(c.cov===null?'sin demanda':fx(c.cov,3)+' %');ok=cl(c.Ph,x.Ph)&&cl(c.Pe,x.Pe)&&cl(c.E,x.E)&&(x.cov===null?c.cov===null:cl(c.cov,x.cov))}
+  return'<tr><td>'+n+'</td><td>'+ent+'</td><td>'+ex+'</td><td>'+ob+'</td><td class="'+(ok?'ok':'err')+'">'+(ok?'✔':'✘')+'</td></tr>'}).join('');
+ renderHis();run();renderSc();nav()}
+/* ---- Navegación por hash ---- */
+const V=['panel','escenarios','academy','historial','proyecto'];
+function nav(){const h=location.hash.slice(1),k=V.includes(h)?h:'panel';V.forEach(x=>$('#'+x).classList.toggle('on',x==k));document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')=='#'+k));if(k=='escenarios')renderSc();$('#fab').style.display=k=='panel'?'':'none';if(k!='panel')$('#dr').classList.remove('open');window.dispatchEvent(new Event('resize'))}
+addEventListener('hashchange',nav);
+init();
+</script></body></html>
