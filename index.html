@@ -136,7 +136,7 @@ const FD=[['q','Caudal','L/s',1,500,1,50],['h','Altura neta','m',1,200,.5,20],['
 const MSG=c=>c===null?'Sin demanda de referencia':c>=100?'Cubre la demanda':c>=50?'Cobertura parcial':'Cobertura insuficiente';
 const pk=(Q,H)=>RHO*G*Q*H/1000, TD={t:8,D:5}, col={c:'#22d3ee',b:'#3b82f6',g:'#2dd4bf'};
 /* ===== CONFIGURACIÓN: pega aquí la URL de tu Apps Script (ver Code.gs) ===== */
-const CFG={URL:'https://script.google.com/macros/s/AKfycbwaqftR5Kq11YxT5ESMWnjoDUzu5MvNdbNEwyRMVaRd1SSBm_JvGB8pXQB56XYxVrgXYw/exec',TO:'ladiazcastillo@uniguajira.edu.co',TOKEN:''};
+const CFG={URL:'https://script.google.com/macros/s/AKfycbwaqftR5Kq11YxT5ESMWnjoDUzu5MvNdbNEwyRMVaRd1SSBm_JvGB8pXQB56XYxVrgXYw/exec',TO:'girnu92@gmail.com',TOKEN:''};
 const clp=(a,x,b)=>Math.max(a,Math.min(b,x));
 function toast(m,k){const t=$('#toast');t.textContent=m;t.className='on '+(k||'');clearTimeout(toast.t);toast.t=setTimeout(()=>t.className='',6000)}
 async function cloud(p){if(!CFG.URL){toast('Falta pegar la URL de Google Apps Script en CFG.URL (ver Code.gs).','er');return false}
